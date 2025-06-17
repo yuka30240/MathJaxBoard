@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LaTeX Formula Exporter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="css/custom.css" rel="stylesheet">
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/tex', 'output/svg', '[tex]/mathtools'] },
+            tex: {
+                packages: { '[+]': ['mathtools'] },
+                svg: { fontCache: 'local' }
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js"></script>
+</head>
+
+<body class="bg-light">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col">
+                <h1 class="mb-4 text-center text-primary">MathJax Board</h1>
+                <p class="text-center text-muted mb-4">Render and export LaTeX mathematical expressions as SVG or PNG
+                </p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <label for="texInput" class="form-label fw-bold mb-0">Formula Input</label>
+                                <div class="d-flex gap-2">
+                                    <select id="exampleSelect" class="form-select form-select-sm" style="width: auto;">
+                                        <option value="" disabled selected>Choose an example...</option>
+                                    </select>
+                                    <button id="btnExample" class="btn btn-sm btn-outline-secondary">Load
+                                        Example</button>
+                                </div>
+                            </div>
+                            <textarea id="texInput" class="form-control" rows="4"
+                                placeholder="Enter LaTeX formula (e.g., \sqrt{x^2 + y^2})"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Export Format</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="format" id="formatSVG" value="svg"
+                                    checked>
+                                <label class="form-check-label" for="formatSVG">
+                                    <i class="bi bi-file-earmark-code"></i> Export to SVG
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="format" id="formatPNG" value="png">
+                                <label class="form-check-label" for="formatPNG">
+                                    <i class="bi bi-file-earmark-image"></i> Export to PNG
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Scale</label>
+                            <div class="d-flex align-items-center gap-3">
+                                <input type="range" id="scaleRange" class="form-range flex-grow-1" min="0.5" max="4"
+                                    step="0.1" value="1">
+                                <span id="scaleValue" class="badge bg-secondary" style="min-width: 3rem;">1.0</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 d-grid gap-2 d-sm-flex">
+                            <button id="btnClipboard" class="btn btn-primary flex-fill">
+                                <i class="bi bi-clipboard"></i> Copy to Clipboard
+                            </button>
+                            <button id="btnDownload" class="btn btn-success flex-fill">
+                                <i class="bi bi-download"></i> Download
+                            </button>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Preview</label>
+                            <div id="preview" class="p-3 border rounded bg-light text-center">
+                                Enter a LaTeX formula to see preview
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="https://github.com/yuka30240/MathJaxBoard" target="_blank"
+                        class="text-decoration-none text-dark">
+                        <i class="bi bi-github fs-4"></i>
+                        <span class="ms-2">View on GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/file-saver/dist/FileSaver.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous">
+        </script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
