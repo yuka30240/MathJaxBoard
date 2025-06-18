@@ -105,8 +105,12 @@ function showNotification(message, type = 'info') {
 
 function updateButtonStates() {
     const svg = DOM.previewContainer.querySelector('svg');
-    const hasValidFormula = !!svg;
+    let hasValidFormula = false;
 
+    if (svg) {
+        const errorIndicators = svg.querySelectorAll('[data-mml-node="merror"]');
+        hasValidFormula = errorIndicators.length === 0;
+    }
     DOM.btnClipboard.disabled = !hasValidFormula;
     DOM.btnDownload.disabled = !hasValidFormula;
     DOM.btnExample.disabled = !DOM.exampleSelect.value;

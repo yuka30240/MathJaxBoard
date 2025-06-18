@@ -25,7 +25,13 @@
     <div class="container py-4">
         <div class="row">
             <div class="col">
-                <h1 class="mb-4 text-center text-primary">MathJax Board</h1>
+                <div class="d-flex justify-content-center align-items-center mb-4">
+                    <h1 class="text-primary mb-0">MathJax Board</h1>
+                    <button class="btn btn-link p-0 ms-2" data-bs-toggle="offcanvas" data-bs-target="#infoOffcanvas"
+                        aria-label="Information">
+                        <i class="bi bi-info-circle fs-4"></i>
+                    </button>
+                </div>
                 <p class="text-center text-muted mb-4">Render and export LaTeX mathematical expressions as SVG or PNG
                 </p>
             </div>
@@ -46,8 +52,14 @@
                                         Example</button>
                                 </div>
                             </div>
-                            <textarea id="texInput" class="form-control" rows="4"
-                                placeholder="Enter LaTeX formula (e.g., \sqrt{x^2 + y^2})"></textarea>
+                            <textarea id="texInput" class="form-control" rows="4"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Preview</label>
+                            <div id="preview" class="p-3 border rounded bg-light text-center">
+                                Enter a LaTeX formula to see preview
+                            </div>
                         </div>
 
                         <div class="mb-3">
@@ -84,23 +96,54 @@
                                 <i class="bi bi-download"></i> Download
                             </button>
                         </div>
-
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Preview</label>
-                            <div id="preview" class="p-3 border rounded bg-light text-center">
-                                Enter a LaTeX formula to see preview
-                            </div>
-                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
 
-                <div class="text-center mt-4">
-                    <a href="https://github.com/yuka30240/MathJaxBoard" target="_blank"
-                        class="text-decoration-none text-dark">
-                        <i class="bi bi-github fs-4"></i>
-                        <span class="ms-2">View on GitHub</span>
-                    </a>
-                </div>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="infoOffcanvas" aria-labelledby="infoOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="infoOffcanvasLabel">About MathJax Board</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="mb-4">
+                <h6 class="fw-bold mb-3"><i class="bi bi-book me-2"></i>Usage</h6>
+                <ul class="small">
+                    <li>Enter LaTeX mathematical expressions in the input field to see a real-time preview.</li>
+                    <li>Export rendered formulas as SVG or PNG images with adjustable scale.</li>
+                    <li>Use the example dropdown to explore some mathematical notations and MathJax extensions.</li>
+                    <li>This software uses <a href="https://www.mathjax.org/" target="_blank">MathJax</a> for rendering
+                        LaTeX notation. Please refer to its documentation for supported LaTeX commands.</li>
+                </ul>
+            </div>
+            <div class="mb-4">
+                <h6 class="fw-bold mb-3"><i class="bi bi-shield-lock me-2"></i>Privacy</h6>
+                <ul class="small">
+                    <li>This application runs entirely within your web browser and all processing occurs locally on your
+                        device.</li>
+                    <li>No data is transmitted to external servers.</li>
+                    <li>No user input, formulas, or personal information is collected, stored, or shared.</li>
+                </ul>
+            </div>
+            <div class="mb-4">
+                <h6 class="fw-bold mb-3"><i class="bi bi-exclamation-triangle me-2"></i>Disclaimer</h6>
+                <ul class="small">
+                    <li>This software is provided "as is", without warranty of any kind, express or implied, including
+                        but not limited to the warranties of merchantability, fitness for a particular purpose and
+                        noninfringement.</li>
+                    <li>In no event shall the authors or copyright holders be liable for any claim, damages or other
+                        liability, whether in an action of contract, tort or otherwise, arising from, out of or in
+                        connection with the software or the use or other dealings in the software.</li>
+                </ul>
+            </div>
+            <hr>
+
+            <div class="text-center">
+                <a href="https://github.com/yuka30240/MathJaxBoard" target="_blank" class="btn btn-sm btn-outline-dark">
+                    <i class="bi bi-github me-1"></i>View on GitHub
+                </a>
             </div>
         </div>
     </div>

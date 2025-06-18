@@ -4,7 +4,7 @@ A web-based LaTeX formula renderer and exporter that allows you to create, previ
 
 ## Features
 
-- LaTeX mathematical notation support via MathJax 3
+- LaTeX mathematical notation support via MathJax
 - Live Preview
 - Export as SVG or PNG format
 - Instantly copy the rendered formula into the clipboard to paste into documents

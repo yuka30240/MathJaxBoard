@@ -7,3 +7,14 @@
     height: auto;
     margin: 10px auto;
 }
+
+.offcanvas-start {
+    width: 400px;
+    max-width: 90vw;
+}
+
+@media (max-width: 576px) {
+    .offcanvas-start {
+        width: 300px;
+    }
+}
