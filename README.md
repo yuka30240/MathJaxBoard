@@ -2,6 +2,10 @@
 
 A web-based LaTeX formula renderer and exporter that allows you to create, preview, and export mathematical expressions as SVG or PNG images.
 
+## Live Demo
+
+**[https://yuka30240.github.io/MathJaxBoard/](https://yuka30240.github.io/MathJaxBoard/)**
+
 ## Features
 
 - LaTeX mathematical notation support via MathJax
