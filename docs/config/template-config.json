@@ -1,0 +1,883 @@
+{
+  "templateGroups": [
+    {
+      "id": "basic1",
+      "side": "left",
+      "label": "Basic Symbols 1",
+      "icon": "\\times",
+      "items": [
+        {
+          "label": "\\times",
+          "insert": "\\times "
+        },
+        {
+          "label": "\\cdot",
+          "insert": "\\cdot "
+        },
+        {
+          "label": "\\div",
+          "insert": "\\div "
+        },
+        {
+          "label": "\\pm",
+          "insert": "\\pm "
+        },
+        {
+          "label": "\\mp",
+          "insert": "\\mp "
+        },
+        {
+          "label": "\\neq",
+          "insert": "\\neq "
+        },
+        {
+          "label": "\\sim",
+          "insert": "\\sim "
+        },
+        {
+          "label": "\\approx",
+          "insert": "\\approx "
+        },
+        {
+          "label": "\\approxeq",
+          "insert": "\\approxeq "
+        },
+        {
+          "label": "\\fallingdotseq",
+          "insert": "\\fallingdotseq "
+        },
+        {
+          "label": "\\equiv",
+          "insert": "\\equiv "
+        },
+        {
+          "label": "\\not\\equiv",
+          "insert": "\\not\\equiv "
+        },
+        {
+          "label": "\\leq",
+          "insert": "\\leq "
+        },
+        {
+          "label": "\\geq",
+          "insert": "\\geq"
+        },
+        {
+          "label": "\\leqq",
+          "insert": "\\leqq "
+        },
+        {
+          "label": "\\geqq",
+          "insert": "\\geqq "
+        }
+      ]
+    },
+    {
+      "id": "basic2",
+      "side": "left",
+      "label": "Basic Symbols 2",
+      "icon": "\\infty",
+      "items": [
+        {
+          "label": "\\infty",
+          "insert": "\\infty "
+        },
+        {
+          "label": "\\pi",
+          "insert": "\\pi "
+        },
+        {
+          "label": "\\in",
+          "insert": "\\in "
+        },
+        {
+          "label": "\\subset",
+          "insert": "\\subset "
+        },
+        {
+          "label": "\\supset",
+          "insert": "\\supset "
+        },
+        {
+          "label": "\\cap",
+          "insert": "\\cap "
+        },
+        {
+          "label": "\\cup",
+          "insert": "\\cup "
+        },
+        {
+          "label": "\\wedge",
+          "insert": "\\wedge "
+        },
+        {
+          "label": "\\vee",
+          "insert": "\\vee "
+        },
+        {
+          "label": "\\mid",
+          "insert": "\\mid "
+        },
+        {
+          "label": "\\parallel",
+          "insert": "\\parallel "
+        },
+        {
+          "label": "\\backslash",
+          "insert": "\\backslash "
+        },
+        {
+          "label": "\\forall",
+          "insert": "\\forall "
+        },
+        {
+          "label": "\\exists",
+          "insert": "\\exists "
+        },
+        {
+          "label": "\\angle",
+          "insert": "\\angle "
+        },
+        {
+          "label": "45^{\\circ}",
+          "insert": "45^{\\circ} ",
+          "selectionStart": 0,
+          "selectionLength": 2
+        }
+      ]
+    },
+    {
+      "id": "basic3",
+      "side": "left",
+      "label": "Basic Symbols 3",
+      "icon": "\\sqrt{2}",
+      "items": [
+        {
+          "label": "\\sqrt{2}",
+          "insert": "\\sqrt{2}",
+          "selectionStart": 6,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\sqrt[n]{a}",
+          "insert": "\\sqrt[n]{a}",
+          "selectionStart": 6,
+          "selectionLength": 1
+        },
+        {
+          "label": "x^{2}",
+          "insert": "x^{2}",
+          "selectionStart": 3,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\tfrac{1}{2}",
+          "insert": "\\frac{1}{2}",
+          "selectionStart": 6,
+          "selectionLength": 1
+        },
+        {
+          "label": "a_{1}",
+          "insert": "a_{1}",
+          "selectionStart": 3,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\vert a \\vert",
+          "insert": "\\vert a \\vert ",
+          "selectionStart": 6,
+          "selectionLength": 1
+        },
+        {
+          "label": "x_{i}^{2}",
+          "insert": "x_{i}^{2}",
+          "selectionStart": 3,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\overline{A}",
+          "insert": "\\overline{A}",
+          "selectionStart": 10,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\vec{x}",
+          "insert": "\\vec{x}",
+          "selectionStart": 5,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\bar{x}",
+          "insert": "\\bar{x}",
+          "selectionStart": 5,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\dot{x}",
+          "insert": "\\dot{x}",
+          "selectionStart": 5,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\hat{x}",
+          "insert": "\\hat{x}",
+          "selectionStart": 5,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\cdots",
+          "insert": "\\cdots "
+        },
+        {
+          "label": "\\ldots",
+          "insert": "\\ldots "
+        },
+        {
+          "label": "\\implies",
+          "insert": "\\implies "
+        },
+        {
+          "label": "\\iff",
+          "insert": "\\iff "
+        }
+      ]
+    },
+    {
+      "id": "functions",
+      "side": "right",
+      "label": "Functions",
+      "icon": "\\sin",
+      "items": [
+        {
+          "label": "\\sin x",
+          "insert": "\\sin x ",
+          "selectionStart": 5,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\cos x",
+          "insert": "\\cos x ",
+          "selectionStart": 5,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\tan x",
+          "insert": "\\tan x ",
+          "selectionStart": 5,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\sin^2 x",
+          "insert": "\\sin^2 x ",
+          "selectionStart": 7,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\cos^2 x",
+          "insert": "\\cos^2 x ",
+          "selectionStart": 7,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\log x",
+          "insert": "\\log x ",
+          "selectionStart": 5,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\log_{a} b",
+          "insert": "\\log_{a} b",
+          "selectionStart": 6,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\ln x",
+          "insert": "\\ln x",
+          "selectionStart": 4,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\exp{x}",
+          "insert": "\\exp{x}",
+          "selectionStart": 5,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\min",
+          "insert": "\\min "
+        },
+        {
+          "label": "\\max",
+          "insert": "\\max "
+        },
+        {
+          "label": "\\operatorname{Re}",
+          "insert": "\\operatorname{Re} "
+        },
+        {
+          "label": "\\operatorname{Im}",
+          "insert": "\\operatorname{Im} "
+        },
+        {
+          "label": "\\arg",
+          "insert": "\\arg"
+        },
+        {
+          "label": "\\sup",
+          "insert": "\\sup "
+        },
+        {
+          "label": "\\inf",
+          "insert": "\\inf "
+        },
+        {
+          "label": "\\dim",
+          "insert": "\\dim "
+        },
+        {
+          "label": "\\ker",
+          "insert": "\\ker "
+        },
+        {
+          "label": "\\det",
+          "insert": "\\det "
+        },
+        {
+          "label": "\\binom{n}{k}",
+          "insert": "\\binom{n}{k}",
+          "selectionStart": 7,
+          "selectionLength": 1
+        }
+      ]
+    },
+    {
+      "id": "delimiters",
+      "side": "right",
+      "label": "Auto-resize Delimiters",
+      "icon": "\\left( x \\right) ",
+      "items": [
+        {
+          "label": "\\left( \\tfrac{1}{x} \\right)",
+          "insert": "\\left( \\frac{1}{x} \\right) ",
+          "selectionStart": 7,
+          "selectionLength": 11
+        },
+        {
+          "label": "\\left[ x \\right]",
+          "insert": "\\left[ x \\right] ",
+          "selectionStart": 7,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\left\\{ x \\right\\}",
+          "insert": "\\left\\{ x \\right\\} ",
+          "selectionStart": 8,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\left| x \\right|",
+          "insert": "\\left| x \\right| ",
+          "selectionStart": 7,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\left\\| x \\right\\|",
+          "insert": "\\left\\| x \\right\\| ",
+          "selectionStart": 8,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\left\\langle x \\right\\rangle",
+          "insert": "\\left\\langle x \\right\\rangle ",
+          "selectionStart": 13,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\left\\lfloor x \\right\\rfloor",
+          "insert": "\\left\\lfloor x \\right\\rfloor ",
+          "selectionStart": 13,
+          "selectionLength": 1
+        },
+        {
+          "label": "\\left\\lceil x \\right\\rceil",
+          "insert": "\\left\\lceil x \\right\\rceil ",
+          "selectionStart": 12,
+          "selectionLength": 1
+        }
+      ]
+    },
+    {
+      "id": "calculus",
+      "side": "right",
+      "label": "Calculus",
+      "icon": "\\int",
+      "items": [
+        {
+          "label": "\\lim",
+          "insert": "\\lim_{n \\to \\infty} a_n ",
+          "selectionStart": 20,
+          "selectionLength": 3
+        },
+        {
+          "label": "\\int_{a}^{b} f(x)\\,dx",
+          "insert": "\\int_{a}^{b} f(x)\\,dx ",
+          "selectionStart": 13,
+          "selectionLength": 4
+        },
+        {
+          "label": "\\limsup",
+          "insert": "\\limsup_{x\\to a} f(x) "
+        },
+        {
+          "label": "\\liminf",
+          "insert": "\\liminf_{x\\to 0} f(x) "
+        },
+        {
+          "label": "\\frac{dy}{dx}",
+          "insert": "\\frac{dy}{dx}"
+        },
+        {
+          "label": "\\frac{\\partial}{\\partial x}",
+          "insert": "\\frac{\\partial}{\\partial x}"
+        },
+        {
+          "label": "\\partial_x f",
+          "insert": "\\partial_x f "
+        },
+        {
+          "label": "f^{\\prime}(x)",
+          "insert": "f^{\\prime}(x) "
+        },
+        {
+          "label": "f^{\\prime\\prime}(x)",
+          "insert": "f^{\\prime\\prime}(x) "
+        },
+        {
+          "label": "f^{(n)}(x)",
+          "insert": "f^{(n)}(x) "
+        },
+        {
+          "label": "\\nabla f",
+          "insert": "\\nabla f "
+        },
+        {
+          "label": "\\Delta f",
+          "insert": "\\Delta f "
+        },
+        {
+          "label": "\\varDelta f",
+          "insert": "\\varDelta f "
+        },
+        {
+          "label": "\\iint_D",
+          "insert": "\\iint_D "
+        },
+        {
+          "label": "\\iiint_V",
+          "insert": "\\iiint_V "
+        },
+        {
+          "label": "\\oint_C",
+          "insert": "\\oint_C "
+        }
+      ]
+    },
+    {
+      "id": "large-operators-misc",
+      "side": "right",
+      "label": "Large Operators and Miscellaneous",
+      "icon": "\\sum",
+      "items": [
+        {
+          "label": "\\sum_{x=0}^{\\infty}",
+          "insert": "\\sum_{x=0}^{\\infty}"
+        },
+        {
+          "label": "\\prod_{i=1}^{n}",
+          "insert": "\\prod_{i=1}^{n}"
+        },
+        {
+          "label": "\\bigcap_{i=1}^{n}",
+          "insert": "\\bigcap_{i=1}^{n}"
+        },
+        {
+          "label": "\\bigcup_{i=1}^{n}",
+          "insert": "\\bigcup_{i=1}^{n}"
+        },
+        {
+          "label": "\\%",
+          "insert": "\\% "
+        },
+        {
+          "label": "\\&",
+          "insert": "\\& "
+        },
+        {
+          "label": "\\therefore",
+          "insert": "\\therefore "
+        },
+        {
+          "label": "\\because",
+          "insert": "\\\because "
+        },
+        {
+          "label": "\\emptyset",
+          "insert": "\\emptyset "
+        },
+        {
+          "label": "\\varnothing",
+          "insert": "\\varnothing "
+        },
+        {
+          "label": "\\aleph",
+          "insert": "\\aleph "
+        },
+        {
+          "label": "\\hbar",
+          "insert": "\\hbar "
+        },
+        {
+          "label": "\\oplus",
+          "insert": "\\oplus "
+        },
+        {
+          "label": "\\otimes",
+          "insert": "\\otimes "
+        },
+        {
+          "label": "\\circ",
+          "insert": "\\circ "
+        },
+        {
+          "label": "\\neg",
+          "insert": "\\neg "
+        },
+        {
+          "label": "\\overline{AB}",
+          "insert": "\\overline{AB}",
+          "selectionStart": 10,
+          "selectionLength": 2
+        },
+        {
+          "label": "\\overrightarrow{PQ}",
+          "insert": "\\overrightarrow{PQ}",
+          "selectionStart": 16,
+          "selectionLength": 2
+        },
+        {
+          "label": "\\scriptstyle{\\overbrace{a_1+\\cdots+a_{100}}^{100}}",
+          "insert": "\\overbrace{a_1+\\cdots+a_{100}}^{100}",
+          "selectionStart": 11,
+          "selectionLength": 18
+        },
+        {
+          "label": "\\scriptstyle{\\underbrace{a_1+\\cdots+a_{100}}_{100}}",
+          "insert": "\\underbrace{a_1+\\cdots+a_{100}}_{100}",
+          "selectionStart": 12,
+          "selectionLength": 18
+        },
+        {
+          "label": "",
+          "insert": ""
+        }
+      ]
+    },
+    {
+      "id": "matrices-multilines",
+      "side": "right",
+      "label": "Matrices & Multilines",
+      "icon": {
+        "type": "svg",
+        "content": "<svg viewBox='8 2 48 28' xmlns='http://www.w3.org/2000/svg'><path d='M16 5 H11 V27 H16' fill='none' stroke='currentColor' stroke-width='1.5'/><path d='M48 5 H53 V27 H48' fill='none' stroke='currentColor' stroke-width='1.5'/><circle cx='25' cy='12' r='2.4' fill='currentColor'/><circle cx='39' cy='12' r='2.4' fill='currentColor'/><circle cx='25' cy='21' r='2.4' fill='currentColor'/><circle cx='39' cy='21' r='2.4' fill='currentColor'/></svg>"
+      },
+      "items": [
+        {
+          "label": "\\begin{matrix} a & b \\\\ c & d \\end{matrix}",
+          "insert": "\\begin{matrix} a & b \\\\ c & d \\end{matrix}"
+        },
+        {
+          "label": "\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}",
+          "insert": "\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}"
+        },
+        {
+          "label": "\\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix}",
+          "insert": "\\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix}"
+        },
+        {
+          "label": "\\begin{vmatrix} a & b \\\\ c & d \\end{vmatrix}",
+          "insert": "\\begin{vmatrix} a & b \\\\ c & d \\end{vmatrix}"
+        },
+        {
+          "label": "\\left(\\begin{smallmatrix} a_{11} & \\dots & a_{1n} \\\\ \\vdots & \\ddots & \\vdots \\\\ a_{m1} & \\dots & a_{mn} \\end{smallmatrix}\\right)",
+          "insert": "\\begin{pmatrix} a_{11} & a_{12} & \\dots & a_{1n} \\\\ a_{21} & a_{22} & \\dots & a_{2n} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ a_{m1} & a_{m2} & \\dots  & a_{mn}\\end{pmatrix}",
+          "colspan": 2
+        },
+        {
+          "label": "f(x) = \\begin{cases} x & (x > 0) \\\\ 0 & (x \\leq 0)\\end{cases}",
+          "insert": "f(x) = \\begin{cases} x & (x > 0) \\\\ 0 & (x \\leq 0)\\end{cases}",
+          "colspan": 2
+        },
+        {
+          "label": "\\begin{align} f(x) &= (x+1)^2 \\\\ &= x^2 + 2x + 1 \\end{align}",
+          "insert": "\\begin{align} f(x) &= (x+1)^2 \\\\ &= x^2 + 2x + 1 \\end{align}",
+          "colspan": 2
+        },
+        {
+          "label": "\\left\\{\\begin{aligned} 5x - 2y &= 1 \\\\ 2x + 3y &= -4 \\end{aligned}\\right.",
+          "insert": "\\left\\{\\begin{aligned} 5x - 2y &= 1 \\\\ 2x + 3y &= -4 \\end{aligned}\\right.",
+          "colspan": 2
+        }
+      ]
+    },
+    {
+      "id": "greek-lowercase",
+      "side": "left",
+      "label": "Greek Lowercase",
+      "icon": "\\alpha",
+      "items": [
+        {
+          "label": "\\alpha",
+          "insert": "\\alpha "
+        },
+        {
+          "label": "\\beta",
+          "insert": "\\beta "
+        },
+        {
+          "label": "\\gamma",
+          "insert": "\\gamma "
+        },
+        {
+          "label": "\\delta",
+          "insert": "\\delta "
+        },
+        {
+          "label": "\\epsilon",
+          "insert": "\\epsilon "
+        },
+        {
+          "label": "\\varepsilon",
+          "insert": "\\varepsilon "
+        },
+        {
+          "label": "\\zeta",
+          "insert": "\\zeta "
+        },
+        {
+          "label": "\\eta",
+          "insert": "\\eta "
+        },
+        {
+          "label": "\\theta",
+          "insert": "\\theta "
+        },
+        {
+          "label": "\\vartheta",
+          "insert": "\\vartheta "
+        },
+        {
+          "label": "\\iota",
+          "insert": "\\iota "
+        },
+        {
+          "label": "\\kappa",
+          "insert": "\\kappa "
+        },
+        {
+          "label": "\\lambda",
+          "insert": "\\lambda "
+        },
+        {
+          "label": "\\mu",
+          "insert": "\\mu "
+        },
+        {
+          "label": "\\nu",
+          "insert": "\\nu "
+        },
+        {
+          "label": "\\xi",
+          "insert": "\\xi "
+        },
+        {
+          "label": "\\pi",
+          "insert": "\\pi "
+        },
+        {
+          "label": "\\varpi",
+          "insert": "\\varpi "
+        },
+        {
+          "label": "\\rho",
+          "insert": "\\rho "
+        },
+        {
+          "label": "\\sigma",
+          "insert": "\\sigma "
+        },
+        {
+          "label": "\\tau",
+          "insert": "\\tau "
+        },
+        {
+          "label": "\\phi",
+          "insert": "\\phi "
+        },
+        {
+          "label": "\\varphi",
+          "insert": "\\varphi "
+        },
+        {
+          "label": "\\chi",
+          "insert": "\\chi "
+        },
+        {
+          "label": "\\omega",
+          "insert": "\\omega "
+        }
+      ]
+    },
+    {
+      "id": "greek-uppercase-others",
+      "side": "left",
+      "label": "Greek Uppercase, Fonts & Spacing",
+      "icon": "\\Omega",
+      "items": [
+        {
+          "label": "\\Gamma",
+          "insert": "\\Gamma "
+        },
+        {
+          "label": "\\Delta",
+          "insert": "\\Delta "
+        },
+        {
+          "label": "\\Theta",
+          "insert": "\\Theta "
+        },
+        {
+          "label": "\\Lambda",
+          "insert": "\\Lambda "
+        },
+        {
+          "label": "\\Xi",
+          "insert": "\\Xi "
+        },
+        {
+          "label": "\\Pi",
+          "insert": "\\Pi "
+        },
+        {
+          "label": "\\Sigma",
+          "insert": "\\Sigma "
+        },
+        {
+          "label": "\\Upsilon",
+          "insert": "\\Upsilon "
+        },
+        {
+          "label": "\\Phi",
+          "insert": "\\Phi "
+        },
+        {
+          "label": "\\Psi",
+          "insert": "\\Psi "
+        },
+        {
+          "label": "\\Omega",
+          "insert": "\\Omega "
+        },
+        {
+          "label": "\\mathrm{abc}",
+          "insert": "\\mathrm{abc}",
+          "selectionStart": 8,
+          "selectionLength": 3
+        },
+        {
+          "label": "\\mathbf{abc}",
+          "insert": "\\mathbf{abc}",
+          "selectionStart": 8,
+          "selectionLength": 3
+        },
+        {
+          "label": "\\boldsymbol{abc}",
+          "insert": "\\boldsymbol{abc}",
+          "selectionStart": 12,
+          "selectionLength": 3
+        },
+        {
+          "label": "\\mathsf{ABC}",
+          "insert": "\\mathsf{ABC}",
+          "selectionStart": 8,
+          "selectionLength": 3
+        },
+        {
+          "label": "\\mathtt{ABC}",
+          "insert": "\\mathtt{ABC}",
+          "selectionStart": 8,
+          "selectionLength": 3
+        },
+        {
+          "label": "\\mathcal{ABC}",
+          "insert": "\\mathcal{ABC}",
+          "selectionStart": 9,
+          "selectionLength": 3
+        },
+        {
+          "label": "\\mathbb{ZNQRC}",
+          "insert": "\\mathbb{ZNQRC}",
+          "selectionStart": 8,
+          "selectionLength": 5
+        },
+        {
+          "label": "\\,",
+          "insert": "\\,",
+          "icon": {
+            "type": "svg",
+            "content": "<svg viewBox='0 0 64 32' xmlns='http://www.w3.org/2000/svg'><rect x='27' y='8' width='5' height='16' rx='1' fill='none' stroke='currentColor' stroke-width='2' stroke-dasharray='2 2'/></svg>"
+          }
+        },
+        {
+          "label": "\\:",
+          "insert": "\\:",
+          "icon": {
+            "type": "svg",
+            "content": "<svg viewBox='0 0 64 32' xmlns='http://www.w3.org/2000/svg'><rect x='25' y='8' width='9' height='16' rx='1' fill='none' stroke='currentColor' stroke-width='1' stroke-dasharray='2 2'/></svg>"
+          }
+        },
+        {
+          "label": "\\;",
+          "insert": "\\;",
+          "icon": {
+            "type": "svg",
+            "content": "<svg viewBox='0 0 64 32' xmlns='http://www.w3.org/2000/svg'><rect x='23' y='8' width='13' height='16' rx='1' fill='none' stroke='currentColor' stroke-width='1' stroke-dasharray='2 2'/></svg>"
+          }
+        },
+        {
+          "label": "\\quad",
+          "insert": "\\quad",
+          "icon": {
+            "type": "svg",
+            "content": "<svg viewBox='0 0 64 32' xmlns='http://www.w3.org/2000/svg'><rect x='18' y='8' width='26' height='16' rx='1' fill='none' stroke='currentColor' stroke-width='1' stroke-dasharray='3 2'/></svg>"
+          }
+        },
+        {
+          "label": "\\qquad",
+          "insert": "\\qquad",
+          "icon": {
+            "type": "svg",
+            "content": "<svg viewBox='0 0 64 32' xmlns='http://www.w3.org/2000/svg'><rect x='11' y='8' width='42' height='16' rx='1' fill='none' stroke='currentColor' stroke-width='1' stroke-dasharray='3 2'/></svg>"
+          }
+        },
+        {
+          "label": "\\!",
+          "insert": "\\!",
+          "icon": {
+            "type": "svg",
+            "content": "<svg viewBox='0 0 64 32' xmlns='http://www.w3.org/2000/svg'><path d='M27 16 L22 12 M27 16 L22 20 M32 16 L37 12 M32 16 L37 20' fill='none' stroke='currentColor' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'/></svg>"
+          }
+        }
+      ]
+    }
+  ]
+}

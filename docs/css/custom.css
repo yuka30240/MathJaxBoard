@@ -13,8 +13,221 @@
     max-width: 90vw;
 }
 
+.formula-history-controls {
+    display: inline-flex;
+    gap: 0.25rem;
+}
+
+.formula-history-btn {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    color: #0d6efd;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: none;
+}
+
+.formula-history-btn:disabled {
+    color: #adb5bd;
+    opacity: 1;
+}
+
+.formula-input-shell {
+    position: relative;
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr) 52px;
+    gap: 0.75rem;
+    align-items: stretch;
+    min-width: 0;
+}
+
+.formula-input-area {
+    min-height: 220px;
+    min-width: 0;
+}
+
+.template-rail {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(5, minmax(0, 1fr));
+    gap: 0.35rem;
+}
+
+.template-group-btn {
+    min-width: 0;
+    min-height: 2.35rem;
+    padding: 0.3rem 0.25rem;
+    border-color: #adb5bd;
+    background: #f8f9fa;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.template-group-btn:hover,
+.template-group-btn.active {
+    color: #0d6efd;
+    background: #edf4ff;
+    border-color: #0d6efd;
+}
+
+.template-popup {
+    position: absolute;
+    z-index: 1080;
+    width: min(360px, calc(100% - 80px));
+    border: 1px solid #d5dbe2;
+}
+
+.template-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.45rem 0.7rem;
+    border-bottom: 1px solid #e9ecef;
+    background: #f8f9fa;
+}
+
+.template-popup-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #495057;
+}
+
+.template-popup-body {
+    padding: 0.65rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+    gap: 0.45rem;
+}
+
+.template-command-btn {
+    min-height: 2.15rem;
+    padding: 0.3rem 0.35rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.template-command-btn-colspan {
+    grid-column: span var(--template-command-colspan, 1);
+}
+
+.template-icon-slot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.template-math-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.template-math-label mjx-container {
+    margin: 0 !important;
+    max-width: 100%;
+    font-size: 0.9em;
+}
+
+.template-svg-icon {
+    width: 1.4rem;
+    height: 1.1rem;
+    display: block;
+    flex: 0 1 auto;
+    color: currentColor;
+}
+
+.template-group-btn[data-group-id="matrices-multilines"] .template-svg-icon {
+    width: 2rem;
+    height: 1.6rem;
+}
+
+.template-command-btn .template-svg-icon {
+    width: 1.65rem;
+    height: 1.3rem;
+}
+
+@media (max-width: 768px) {
+    .formula-input-shell {
+        grid-template-columns: 44px minmax(0, 1fr) 44px;
+        gap: 0.55rem;
+    }
+
+    .formula-input-area {
+        min-height: 205px;
+    }
+
+    .template-popup {
+        width: min(300px, calc(100% - 68px));
+    }
+}
+
 @media (max-width: 576px) {
     .offcanvas-start {
         width: 300px;
+    }
+
+    .formula-input-shell {
+        grid-template-columns: 40px minmax(0, 1fr) 40px;
+        gap: 0.45rem;
+    }
+
+    .formula-input-area {
+        min-height: 180px;
+    }
+
+    .template-group-btn {
+        min-height: 2rem;
+        padding: 0.2rem;
+    }
+
+    .template-math-label mjx-container {
+        font-size: 0.78em;
+    }
+
+    .template-svg-icon {
+        width: 1.15rem;
+        height: 0.95rem;
+    }
+
+    .template-group-btn[data-group-id="matrices-multilines"] .template-svg-icon {
+        width: 1.7rem;
+        height: 1.35rem;
+    }
+
+    .template-popup {
+        width: min(260px, calc(100% - 56px));
+    }
+
+    .template-popup-body {
+        grid-template-columns: repeat(auto-fill, minmax(62px, 1fr));
+    }
+}
+
+@media (max-width: 420px) {
+    .formula-input-shell {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .template-rail {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        grid-template-rows: minmax(0, 1fr);
+    }
+
+    .template-popup {
+        width: calc(100% - 16px);
     }
 }

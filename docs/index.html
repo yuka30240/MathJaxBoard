@@ -11,11 +11,11 @@
     <link href="css/custom.css" rel="stylesheet">
     <script>
         window.MathJax = {
-            loader: { load: ['input/tex', 'output/svg', '[tex]/mathtools'] },
+            loader: { load: ['input/tex', 'output/svg', '[tex]/mathtools', '[tex]/boldsymbol'] },
             tex: {
-                packages: { '[+]': ['mathtools'] },
-                svg: { fontCache: 'local' }
-            }
+                packages: { '[+]': ['mathtools', 'boldsymbol'] }
+            },
+            svg: { fontCache: 'local' }
         };
     </script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js"></script>
@@ -38,21 +38,43 @@
         </div>
 
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-lg-10 col-xl-9 col-xxl-8">
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <div class="mb-3">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <label for="texInput" class="form-label fw-bold mb-0">Formula Input</label>
-                                <div class="d-flex gap-2">
-                                    <select id="exampleSelect" class="form-select form-select-sm" style="width: auto;">
-                                        <option value="" disabled selected>Choose an example...</option>
-                                    </select>
-                                    <button id="btnExample" class="btn btn-sm btn-outline-secondary">Load
-                                        Example</button>
+                                <div class="formula-history-controls" role="group"
+                                    aria-label="Formula input history controls">
+                                    <button id="btnUndoFormulaInput" type="button"
+                                        class="btn btn-sm btn-link formula-history-btn" aria-label="Undo formula input"
+                                        title="Undo" disabled>
+                                        <i class="bi bi-arrow-counterclockwise"></i>
+                                    </button>
+                                    <button id="btnRedoFormulaInput" type="button"
+                                        class="btn btn-sm btn-link formula-history-btn" aria-label="Redo formula input"
+                                        title="Redo" disabled>
+                                        <i class="bi bi-arrow-clockwise"></i>
+                                    </button>
                                 </div>
                             </div>
-                            <textarea id="texInput" class="form-control" rows="4"></textarea>
+                            <div id="formulaInputShell" class="formula-input-shell">
+                                <div id="templateRailLeft" class="template-rail template-rail-left"
+                                    aria-label="Left template groups"></div>
+                                <textarea id="texInput" class="form-control formula-input-area" rows="4"></textarea>
+                                <div id="templateRailRight" class="template-rail template-rail-right"
+                                    aria-label="Right template groups"></div>
+                                <div id="templatePopup" class="template-popup card shadow-sm" hidden>
+                                    <div class="template-popup-header">
+                                        <span id="templatePopupTitle" class="template-popup-title"></span>
+                                        <button id="templatePopupClose" type="button" class="btn btn-sm btn-link p-0"
+                                            aria-label="Close template popup">
+                                            <i class="bi bi-x-lg"></i>
+                                        </button>
+                                    </div>
+                                    <div id="templatePopupBody" class="template-popup-body"></div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="mb-3">
@@ -113,10 +135,12 @@
                 <ul class="small">
                     <li>Enter LaTeX mathematical expressions in the input field to see a real-time preview.</li>
                     <li>Export rendered formulas as SVG or PNG images with adjustable scale.</li>
-                    <li>Use the example dropdown to explore some mathematical notations and MathJax extensions.</li>
+                    <li>Use the template buttons to insert common mathematical symbols and preset formulas.</li>
                     <li>This software uses <a href="https://www.mathjax.org/" target="_blank">MathJax</a> for rendering
                         LaTeX notation. Please refer to its documentation for supported LaTeX commands.</li>
-                    <li><strong>Note:</strong> The "Copy to Clipboard" feature, particularly for SVG export, may not work properly on some web browsers or devices. If you encounter issues, please use the "Download" feature instead.</li>
+                    <li><strong>Note:</strong> The "Copy to Clipboard" feature, particularly for SVG export, may not
+                        work properly on some web browsers or devices. If you encounter issues, please use the
+                        "Download" feature instead.</li>
                 </ul>
             </div>
             <div class="mb-4">
