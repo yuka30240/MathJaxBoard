@@ -8,6 +8,11 @@
     margin: 10px auto;
 }
 
+.unicode-text-output {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    resize: vertical;
+}
+
 .offcanvas-start {
     width: 400px;
     max-width: 90vw;
