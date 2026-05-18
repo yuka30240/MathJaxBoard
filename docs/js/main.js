@@ -3,10 +3,16 @@ const DOM = {
     previewContainer: document.getElementById('preview'),
     btnClipboard: document.getElementById('btnClipboard'),
     btnDownload: document.getElementById('btnDownload'),
+    btnUnicodeText: document.getElementById('btnUnicodeText'),
+    btnCopyUnicodeText: document.getElementById('btnCopyUnicodeText'),
+    formatInputs: document.querySelectorAll('input[name="format"]'),
     btnUndoFormulaInput: document.getElementById('btnUndoFormulaInput'),
     btnRedoFormulaInput: document.getElementById('btnRedoFormulaInput'),
     scaleRange: document.getElementById('scaleRange'),
     scaleValue: document.getElementById('scaleValue'),
+    unicodeTextModal: document.getElementById('unicodeTextModal'),
+    unicodeTextOutput: document.getElementById('unicodeTextOutput'),
+    unicodeTextWarning: document.getElementById('unicodeTextWarning'),
     formulaInputShell: document.getElementById('formulaInputShell'),
     templateRailLeft: document.getElementById('templateRailLeft'),
     templateRailRight: document.getElementById('templateRailRight'),
@@ -39,6 +45,15 @@ let isApplyingFormulaInputHistory = false;
 MathJax.startup.promise.then(async () => {
     DOM.btnClipboard.addEventListener('click', () => handleExport('clipboard'));
     DOM.btnDownload.addEventListener('click', () => handleExport('download'));
+    if (DOM.btnUnicodeText) {
+        DOM.btnUnicodeText.addEventListener('click', openUnicodeTextModal);
+    }
+    if (DOM.btnCopyUnicodeText) {
+        DOM.btnCopyUnicodeText.addEventListener('click', copyUnicodeTextToClipboard);
+    }
+    DOM.formatInputs.forEach((input) => {
+        input.addEventListener('change', updateFormatActionLabels);
+    });
 
     if (DOM.btnUndoFormulaInput) {
         DOM.btnUndoFormulaInput.addEventListener('click', undoFormulaInput);
@@ -79,6 +94,7 @@ MathJax.startup.promise.then(async () => {
     await loadTemplateIconConfig();
     renderTemplateGroupButtons();
     renderPreview();
+    updateFormatActionLabels();
     updateButtonStates();
 });
 
@@ -641,6 +657,19 @@ function handleExport(exportMode) {
     }
 }
 
+function updateFormatActionLabels() {
+    const selectedFormat = document.querySelector('input[name="format"]:checked')?.value || 'svg';
+    const formatLabel = selectedFormat === 'png' ? 'PNG' : 'SVG';
+
+    if (DOM.btnClipboard) {
+        DOM.btnClipboard.innerHTML = `<i class="bi bi-clipboard"></i> Copy as ${formatLabel}`;
+    }
+
+    if (DOM.btnDownload) {
+        DOM.btnDownload.innerHTML = `<i class="bi bi-download"></i> Download as ${formatLabel}`;
+    }
+}
+
 function showNotification(message, type = 'info') {
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3`;
@@ -667,6 +696,49 @@ function updateButtonStates() {
     }
     DOM.btnClipboard.disabled = !hasValidFormula;
     DOM.btnDownload.disabled = !hasValidFormula;
+    if (DOM.btnUnicodeText) {
+        DOM.btnUnicodeText.disabled = !hasValidFormula;
+    }
+}
+
+function openUnicodeTextModal() {
+    if (!DOM.unicodeTextModal || !DOM.unicodeTextOutput || !DOM.unicodeTextWarning) return;
+
+    const converter = window.MathJaxBoardToText;
+    if (!converter || typeof converter.latexToUnicodeText !== 'function') {
+        showNotification('Unicode text converter is not available', 'danger');
+        return;
+    }
+
+    const result = converter.latexToUnicodeText(DOM.formulaInput.value);
+    DOM.unicodeTextOutput.value = result.text;
+
+    if (result.warnings.length) {
+        DOM.unicodeTextWarning.hidden = false;
+        DOM.unicodeTextWarning.textContent = `Some LaTeX was preserved: ${result.warnings.join('; ')}`;
+    } else {
+        DOM.unicodeTextWarning.hidden = true;
+        DOM.unicodeTextWarning.textContent = '';
+    }
+
+    const modal = bootstrap.Modal.getOrCreateInstance(DOM.unicodeTextModal);
+    modal.show();
+    DOM.unicodeTextModal.addEventListener('shown.bs.modal', () => {
+        DOM.unicodeTextOutput.focus();
+        DOM.unicodeTextOutput.select();
+    }, { once: true });
+}
+
+async function copyUnicodeTextToClipboard() {
+    if (!DOM.unicodeTextOutput) return;
+
+    try {
+        await navigator.clipboard.writeText(DOM.unicodeTextOutput.value);
+        showNotification('Unicode text copied to clipboard!', 'success');
+    } catch (error) {
+        console.error('Unicode text clipboard error:', error);
+        showNotification('Clipboard access denied. Please check browser permissions', 'danger');
+    }
 }
 
 async function renderPreview() {
