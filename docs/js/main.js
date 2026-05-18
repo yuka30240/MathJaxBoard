@@ -753,12 +753,60 @@ async function renderPreview() {
         const svg = node.querySelector('svg');
         DOM.previewContainer.innerHTML = '';
         DOM.previewContainer.appendChild(svg);
+        expandSvgViewBoxToBBox(svg);
     } catch (error) {
         const errorMessage = error.message || 'Unknown error occurred';
         DOM.previewContainer.innerHTML = `<span class="text-danger">LaTeX rendering error: ${errorMessage}</span>`;
         console.error('LaTeX rendering error:', error);
     }
     updateButtonStates();
+}
+
+function expandSvgViewBoxToBBox(svg) {
+    if (!svg || typeof svg.getBBox !== 'function') return;
+
+    const viewBox = svg.getAttribute('viewBox');
+    if (!viewBox) return;
+
+    const viewBoxValues = viewBox.trim().split(/\s+/).map(Number);
+    if (viewBoxValues.length !== 4 || viewBoxValues.some(Number.isNaN)) return;
+
+    let bbox;
+    try {
+        bbox = svg.getBBox();
+    } catch (error) {
+        console.warn('Unable to measure SVG bounding box:', error);
+        return;
+    }
+
+    if (!bbox || bbox.width <= 0 || bbox.height <= 0) return;
+
+    const [viewMinX, viewMinY, viewWidth, viewHeight] = viewBoxValues;
+    const viewMaxX = viewMinX + viewWidth;
+    const viewMaxY = viewMinY + viewHeight;
+    const bboxMaxX = bbox.x + bbox.width;
+    const bboxMaxY = bbox.y + bbox.height;
+
+    const hasOverflow =
+        bbox.x < viewMinX ||
+        bbox.y < viewMinY ||
+        bboxMaxX > viewMaxX ||
+        bboxMaxY > viewMaxY;
+    if (!hasOverflow) return;
+
+    const nextMinX = Math.min(viewMinX, bbox.x);
+    const nextMinY = Math.min(viewMinY, bbox.y);
+    const nextMaxX = Math.max(viewMaxX, bboxMaxX);
+    const nextMaxY = Math.max(viewMaxY, bboxMaxY);
+
+    const expandedWidth = nextMaxX - nextMinX;
+    const expandedHeight = nextMaxY - nextMinY;
+    const padding = Math.max(Math.max(expandedWidth, expandedHeight) * 0.005, 1);
+
+    svg.setAttribute(
+        'viewBox',
+        `${nextMinX - padding} ${nextMinY - padding} ${expandedWidth + padding * 2} ${expandedHeight + padding * 2}`
+    );
 }
 
 function prepareExportData() {
@@ -774,6 +822,7 @@ function prepareExportData() {
         scale = CONFIG.SCALE_DEFAULT;
     }
 
+    expandSvgViewBoxToBBox(svg);
     const svgClone = svg.cloneNode(true);
     svgClone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
     svgClone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
