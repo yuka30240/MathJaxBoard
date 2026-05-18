@@ -63,13 +63,118 @@
         '\\_': '_', '\\%': '%', '\\{': '{', '\\}': '}'
     };
 
-    const BLACKBOARD = {
-        N: 'ℕ',
-        Z: 'ℤ',
-        Q: 'ℚ',
-        R: 'ℝ',
-        C: 'ℂ',
-        F: '𝔽'
+    const GREEK_UPPERCASE = 'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ';
+    const GREEK_LOWERCASE = 'αβγδεζηθικλμνξοπρςστυφχψω';
+
+    const MATH_ALPHANUMERIC_STYLE_DEFINITIONS = {
+        italic: {
+            ranges: [
+                { from: 'A', to: 'Z', start: 0x1D434 },
+                { from: 'a', to: 'z', start: 0x1D44E }
+            ],
+            sequences: [
+                { chars: GREEK_UPPERCASE, start: 0x1D6E2 },
+                { chars: GREEK_LOWERCASE, start: 0x1D6FC }
+            ],
+            overrides: {
+                h: 'ℎ'
+            }
+        },
+        sansSerif: {
+            ranges: [
+                { from: 'A', to: 'Z', start: 0x1D5A0 },
+                { from: 'a', to: 'z', start: 0x1D5BA },
+                { from: '0', to: '9', start: 0x1D7E2 }
+            ]
+        },
+        monospace: {
+            ranges: [
+                { from: 'A', to: 'Z', start: 0x1D670 },
+                { from: 'a', to: 'z', start: 0x1D68A },
+                { from: '0', to: '9', start: 0x1D7F6 }
+            ]
+        },
+        bold: {
+            ranges: [
+                { from: 'A', to: 'Z', start: 0x1D400 },
+                { from: 'a', to: 'z', start: 0x1D41A },
+                { from: '0', to: '9', start: 0x1D7CE }
+            ],
+            sequences: [
+                { chars: GREEK_UPPERCASE, start: 0x1D6A8 },
+                { chars: GREEK_LOWERCASE, start: 0x1D6C2 }
+            ]
+        },
+        boldItalic: {
+            ranges: [
+                { from: 'A', to: 'Z', start: 0x1D468 },
+                { from: 'a', to: 'z', start: 0x1D482 }
+            ],
+            sequences: [
+                { chars: GREEK_UPPERCASE, start: 0x1D71C },
+                { chars: GREEK_LOWERCASE, start: 0x1D736 }
+            ]
+        },
+        blackboard: {
+            ranges: [
+                { from: 'A', to: 'Z', start: 0x1D538 },
+                { from: 'a', to: 'z', start: 0x1D552 },
+                { from: '0', to: '9', start: 0x1D7D8 }
+            ],
+            overrides: {
+                C: 'ℂ',
+                H: 'ℍ',
+                N: 'ℕ',
+                P: 'ℙ',
+                Q: 'ℚ',
+                R: 'ℝ',
+                Z: 'ℤ'
+            }
+        },
+        script: {
+            ranges: [
+                { from: 'A', to: 'Z', start: 0x1D49C },
+                { from: 'a', to: 'z', start: 0x1D4B6 }
+            ],
+            overrides: {
+                B: 'ℬ',
+                E: 'ℰ',
+                F: 'ℱ',
+                H: 'ℋ',
+                I: 'ℐ',
+                L: 'ℒ',
+                M: 'ℳ',
+                R: 'ℛ',
+                e: 'ℯ',
+                g: 'ℊ',
+                o: 'ℴ'
+            }
+        },
+        fraktur: {
+            ranges: [
+                { from: 'A', to: 'Z', start: 0x1D504 },
+                { from: 'a', to: 'z', start: 0x1D51E }
+            ],
+            overrides: {
+                C: 'ℭ',
+                H: 'ℌ',
+                I: 'ℑ',
+                R: 'ℜ',
+                Z: 'ℨ'
+            }
+        }
+    };
+
+    const MATH_ALPHANUMERIC_STYLES = {
+        '\\mathit': MATH_ALPHANUMERIC_STYLE_DEFINITIONS.italic,
+        '\\mathsf': MATH_ALPHANUMERIC_STYLE_DEFINITIONS.sansSerif,
+        '\\mathtt': MATH_ALPHANUMERIC_STYLE_DEFINITIONS.monospace,
+        '\\mathbf': MATH_ALPHANUMERIC_STYLE_DEFINITIONS.bold,
+        '\\bm': MATH_ALPHANUMERIC_STYLE_DEFINITIONS.boldItalic,
+        '\\boldsymbol': MATH_ALPHANUMERIC_STYLE_DEFINITIONS.boldItalic,
+        '\\mathbb': MATH_ALPHANUMERIC_STYLE_DEFINITIONS.blackboard,
+        '\\mathcal': MATH_ALPHANUMERIC_STYLE_DEFINITIONS.script,
+        '\\mathfrak': MATH_ALPHANUMERIC_STYLE_DEFINITIONS.fraktur
     };
 
     const FUNCTIONS = new Map([
@@ -254,8 +359,8 @@
             if (command === '\\frac') {
                 return this.parseFrac();
             }
-            if (command === '\\mathbb') {
-                return this.parseMathbb();
+            if (Object.prototype.hasOwnProperty.call(MATH_ALPHANUMERIC_STYLES, command)) {
+                return this.parseMathAlphanumeric(command);
             }
             if (command === '\\operatorname') {
                 return this.parseOperatorName();
@@ -339,10 +444,10 @@
             return `${wrapFractionPart(safeNumerator)}/${wrapFractionPart(safeDenominator)}`;
         }
 
-        parseMathbb() {
+        parseMathAlphanumeric(command) {
             const value = this.parseGroupArgument();
             if (!value) return '';
-            return BLACKBOARD[value] || value;
+            return convertMathAlphanumeric(value, MATH_ALPHANUMERIC_STYLES[command]);
         }
 
         parseOperatorName() {
@@ -640,6 +745,34 @@
             return false;
         }
         return true;
+    }
+
+    function convertMathAlphanumeric(value, style) {
+        return Array.from(value).map((char) => convertMathAlphanumericChar(char, style)).join('');
+    }
+
+    function convertMathAlphanumericChar(char, style) {
+        const overrides = style.overrides || {};
+        if (Object.prototype.hasOwnProperty.call(overrides, char)) {
+            return overrides[char];
+        }
+
+        const codePoint = char.codePointAt(0);
+        for (const range of style.ranges || []) {
+            const from = range.from.codePointAt(0);
+            const to = range.to.codePointAt(0);
+            if (from <= codePoint && codePoint <= to) {
+                return String.fromCodePoint(range.start + codePoint - from);
+            }
+        }
+
+        for (const sequence of style.sequences || []) {
+            const index = Array.from(sequence.chars).indexOf(char);
+            if (index !== -1) {
+                return String.fromCodePoint(sequence.start + index);
+            }
+        }
+        return char;
     }
 
     function wrapFractionPart(value) {
