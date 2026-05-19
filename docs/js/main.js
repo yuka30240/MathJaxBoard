@@ -13,6 +13,7 @@ const DOM = {
     unicodeTextModal: document.getElementById('unicodeTextModal'),
     unicodeTextOutput: document.getElementById('unicodeTextOutput'),
     unicodeTextWarning: document.getElementById('unicodeTextWarning'),
+    unicodeTextUseMathItalic: document.getElementById('unicodeTextUseMathItalic'),
     formulaInputShell: document.getElementById('formulaInputShell'),
     templateRailLeft: document.getElementById('templateRailLeft'),
     templateRailRight: document.getElementById('templateRailRight'),
@@ -50,6 +51,9 @@ MathJax.startup.promise.then(async () => {
     }
     if (DOM.btnCopyUnicodeText) {
         DOM.btnCopyUnicodeText.addEventListener('click', copyUnicodeTextToClipboard);
+    }
+    if (DOM.unicodeTextUseMathItalic) {
+        DOM.unicodeTextUseMathItalic.addEventListener('change', updateUnicodeTextOutput);
     }
     DOM.formatInputs.forEach((input) => {
         input.addEventListener('change', updateFormatActionLabels);
@@ -704,13 +708,30 @@ function updateButtonStates() {
 function openUnicodeTextModal() {
     if (!DOM.unicodeTextModal || !DOM.unicodeTextOutput || !DOM.unicodeTextWarning) return;
 
-    const converter = window.MathJaxBoardToText;
-    if (!converter || typeof converter.latexToUnicodeText !== 'function') {
-        showNotification('Unicode text converter is not available', 'danger');
+    if (!updateUnicodeTextOutput()) {
         return;
     }
 
-    const result = converter.latexToUnicodeText(DOM.formulaInput.value);
+    const modal = bootstrap.Modal.getOrCreateInstance(DOM.unicodeTextModal);
+    modal.show();
+    DOM.unicodeTextModal.addEventListener('shown.bs.modal', () => {
+        DOM.unicodeTextOutput.focus();
+        DOM.unicodeTextOutput.select();
+    }, { once: true });
+}
+
+function updateUnicodeTextOutput() {
+    if (!DOM.unicodeTextOutput || !DOM.unicodeTextWarning) return false;
+
+    const converter = window.MathJaxBoardToText;
+    if (!converter || typeof converter.latexToUnicodeText !== 'function') {
+        showNotification('Unicode text converter is not available', 'danger');
+        return false;
+    }
+
+    const result = converter.latexToUnicodeText(DOM.formulaInput.value, {
+        defaultMathAlphabet: DOM.unicodeTextUseMathItalic?.checked ? 'italic' : 'plain'
+    });
     DOM.unicodeTextOutput.value = result.text;
 
     if (result.warnings.length) {
@@ -721,12 +742,7 @@ function openUnicodeTextModal() {
         DOM.unicodeTextWarning.textContent = '';
     }
 
-    const modal = bootstrap.Modal.getOrCreateInstance(DOM.unicodeTextModal);
-    modal.show();
-    DOM.unicodeTextModal.addEventListener('shown.bs.modal', () => {
-        DOM.unicodeTextOutput.focus();
-        DOM.unicodeTextOutput.select();
-    }, { once: true });
+    return true;
 }
 
 async function copyUnicodeTextToClipboard() {

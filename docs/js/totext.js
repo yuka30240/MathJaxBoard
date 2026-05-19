@@ -215,11 +215,24 @@
         '\\le', '\\leq', '\\ge', '\\geq', '\\in', '\\subseteq'
     ]);
 
+    const GREEK_LETTER_COMMANDS = new Set([
+        '\\alpha', '\\beta', '\\gamma', '\\delta',
+        '\\epsilon', '\\varepsilon', '\\zeta', '\\eta',
+        '\\theta', '\\vartheta', '\\iota', '\\kappa',
+        '\\lambda', '\\mu', '\\nu', '\\xi',
+        '\\pi', '\\varpi', '\\rho', '\\varrho',
+        '\\sigma', '\\varsigma', '\\tau', '\\upsilon',
+        '\\phi', '\\varphi', '\\chi', '\\psi',
+        '\\omega', '\\Gamma', '\\Delta', '\\Theta',
+        '\\Lambda', '\\Xi', '\\Pi', '\\Sigma',
+        '\\Upsilon', '\\Phi', '\\Psi', '\\Omega'
+    ]);
+
     const TIGHT_RIGHT_SYMBOLS = ['∂', '∇', 'Δ'];
     const TIGHT_INFIX_SYMBOLS = ['·', '⋅'];
 
-    function latexToUnicodeText(input) {
-        const parser = new Parser(String(input || ''));
+    function latexToUnicodeText(input, options = {}) {
+        const parser = new Parser(String(input || ''), options);
         return {
             text: normalizeOutputSpacing(parser.parseSequence()),
             warnings: parser.warnings
@@ -227,11 +240,12 @@
     }
 
     class Parser {
-        constructor(input) {
+        constructor(input, options = {}) {
             this.input = input;
             this.tokens = tokenize(input);
             this.index = 0;
             this.warnings = [];
+            this.defaultMathAlphabet = options.defaultMathAlphabet === 'italic' ? 'italic' : 'plain';
         }
 
         current() {
@@ -264,6 +278,7 @@
             const token = this.consume();
             switch (token.type) {
                 case 'TEXT':
+                    return this.convertDefaultText(token.value);
                 case 'SPACE':
                 case 'OPERATOR':
                     return token.value;
@@ -366,7 +381,7 @@
                 return this.parseOperatorName();
             }
             if (command === '\\mathrm') {
-                return this.parseGroupArgument() || '';
+                return this.withDefaultMathAlphabet('plain', () => this.parseGroupArgument() || '');
             }
             if (command === '\\begin') {
                 return this.parseEnvironment(token);
@@ -379,7 +394,7 @@
                 return this.parseFunction(FUNCTIONS.get(command));
             }
             if (Object.prototype.hasOwnProperty.call(COMMAND_SYMBOLS, command)) {
-                return COMMAND_SYMBOLS[command];
+                return this.convertDefaultCommandSymbol(command);
             }
 
             this.warn(`Unsupported command: ${command}`);
@@ -445,13 +460,13 @@
         }
 
         parseMathAlphanumeric(command) {
-            const value = this.parseGroupArgument();
+            const value = this.withDefaultMathAlphabet('plain', () => this.parseGroupArgument());
             if (!value) return '';
             return convertMathAlphanumeric(value, MATH_ALPHANUMERIC_STYLES[command]);
         }
 
         parseOperatorName() {
-            const name = this.parseGroupArgument() || '';
+            const name = this.withDefaultMathAlphabet('plain', () => this.parseGroupArgument() || '');
             return this.parseNamedOperator(name);
         }
 
@@ -565,11 +580,13 @@
                 this.warn('Missing script argument');
                 return '';
             }
-            if (this.current().type === 'LBRACE') {
-                this.consume();
-                return this.parseGroupContent();
-            }
-            return this.parseAtom();
+            return this.withDefaultMathAlphabet('plain', () => {
+                if (this.current().type === 'LBRACE') {
+                    this.consume();
+                    return this.parseGroupContent();
+                }
+                return this.parseAtom();
+            });
         }
 
         readFunctionArgument() {
@@ -607,6 +624,31 @@
 
         warn(message) {
             this.warnings.push(message);
+        }
+
+        convertDefaultText(value) {
+            if (this.defaultMathAlphabet !== 'italic') {
+                return value;
+            }
+            return convertMathAlphanumeric(value, MATH_ALPHANUMERIC_STYLE_DEFINITIONS.italic);
+        }
+
+        convertDefaultCommandSymbol(command) {
+            const symbol = COMMAND_SYMBOLS[command];
+            if (this.defaultMathAlphabet !== 'italic' || !GREEK_LETTER_COMMANDS.has(command)) {
+                return symbol;
+            }
+            return convertMathAlphanumeric(symbol, MATH_ALPHANUMERIC_STYLE_DEFINITIONS.italic);
+        }
+
+        withDefaultMathAlphabet(defaultMathAlphabet, callback) {
+            const previousDefaultMathAlphabet = this.defaultMathAlphabet;
+            this.defaultMathAlphabet = defaultMathAlphabet;
+            try {
+                return callback();
+            } finally {
+                this.defaultMathAlphabet = previousDefaultMathAlphabet;
+            }
         }
     }
 
@@ -786,7 +828,7 @@
         if (/^∂[A-Za-zΑ-Ωα-ω]/.test(value)) {
             return false;
         }
-        return /^[A-Za-z0-9α-ωΑ-Ωℕℤℚℝℂ𝔽ℏℓℵ∞∂∇]+[\u00B2\u00B3\u00B9\u2070-\u207F\u2080-\u209C]*$/.test(value);
+        return /^[A-Za-z0-9α-ωΑ-Ωℕℤℚℝℂ𝔽ℏℓℵ∞∂∇\u{1D400}-\u{1D7FF}]+[\u00B2\u00B3\u00B9\u2070-\u207F\u2080-\u209C\u1D62-\u1D65\u2C7C]*$/u.test(value);
     }
 
     function normalizeOutputSpacing(value) {
