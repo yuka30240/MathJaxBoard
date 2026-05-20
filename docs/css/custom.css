@@ -1,3 +1,11 @@
+@font-face {
+    font-family: "MathJaxBoard Unicode Math";
+    src: url("../fonts/STIXTwoMath-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+}
+
 .form-check-input {
     border: 1px solid #888;
 }
@@ -9,7 +17,7 @@
 }
 
 .unicode-text-output {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    font-family: "MathJaxBoard Unicode Math", "Cambria Math", "Noto Sans Math", serif;
     resize: vertical;
 }
 
@@ -163,18 +171,6 @@
 .template-command-btn .template-svg-icon {
     width: 1.65rem;
     height: 1.3rem;
-}
-
-@font-face {
-    font-family: "MathJaxBoard Unicode Math";
-    src: url("../fonts/STIXTwoMath-Regular.woff2") format("woff2");
-    font-weight: 400;
-    font-style: normal;
-    font-display: block;
-}
-
-#unicodeTextOutput {
-    font-family: "MathJaxBoard Unicode Math", "Cambria Math", "Noto Sans Math", serif;
 }
 
 @media (max-width: 768px) {
