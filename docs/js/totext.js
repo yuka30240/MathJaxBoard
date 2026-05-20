@@ -7,15 +7,20 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
     const COMMAND_SYMBOLS = {
         '\\alpha': 'α', '\\beta': 'β', '\\gamma': 'γ', '\\delta': 'δ',
-        '\\epsilon': 'ε', '\\varepsilon': 'ε', '\\zeta': 'ζ', '\\eta': 'η',
+        '\\epsilon': 'ϵ', '\\varepsilon': 'ε', '\\zeta': 'ζ', '\\eta': 'η',
         '\\theta': 'θ', '\\vartheta': 'ϑ', '\\iota': 'ι', '\\kappa': 'κ',
+        '\\varkappa': 'ϰ',
         '\\lambda': 'λ', '\\mu': 'μ', '\\nu': 'ν', '\\xi': 'ξ',
         '\\pi': 'π', '\\varpi': 'ϖ', '\\rho': 'ρ', '\\varrho': 'ϱ',
         '\\sigma': 'σ', '\\varsigma': 'ς', '\\tau': 'τ', '\\upsilon': 'υ',
-        '\\phi': 'φ', '\\varphi': 'φ', '\\chi': 'χ', '\\psi': 'ψ',
+        '\\phi': 'ϕ', '\\varphi': 'φ', '\\chi': 'χ', '\\psi': 'ψ',
         '\\omega': 'ω', '\\Gamma': 'Γ', '\\Delta': 'Δ', '\\Theta': 'Θ',
         '\\Lambda': 'Λ', '\\Xi': 'Ξ', '\\Pi': 'Π', '\\Sigma': 'Σ',
         '\\Upsilon': 'Υ', '\\Phi': 'Φ', '\\Psi': 'Ψ', '\\Omega': 'Ω',
+        '\\varGamma': '𝛤', '\\varDelta': '𝛥', '\\varTheta': '𝛩',
+        '\\varLambda': '𝛬', '\\varXi': '𝛯', '\\varPi': '𝛱',
+        '\\varSigma': '𝛴', '\\varUpsilon': '𝛶', '\\varPhi': '𝛷',
+        '\\varPsi': '𝛹', '\\varOmega': '𝛺',
         '\\hbar': 'ℏ', '\\hslash': 'ℏ', '\\ell': 'ℓ', '\\aleph': 'ℵ',
         '\\imath': 'ı', '\\jmath': 'ȷ',
         '\\le': '≤', '\\leq': '≤', '\\leqq': '≦',
@@ -77,7 +82,20 @@
                 { chars: GREEK_LOWERCASE, start: 0x1D6FC }
             ],
             overrides: {
-                h: 'ℎ'
+                h: 'ℎ',
+                Σ: '𝛴',
+                Τ: '𝛵',
+                Υ: '𝛶',
+                Φ: '𝛷',
+                Χ: '𝛸',
+                Ψ: '𝛹',
+                Ω: '𝛺',
+                ϵ: '𝜖',
+                ϑ: '𝜗',
+                ϰ: '𝜘',
+                ϕ: '𝜙',
+                ϱ: '𝜚',
+                ϖ: '𝜛'
             }
         },
         sansSerif: {
@@ -103,7 +121,33 @@
             sequences: [
                 { chars: GREEK_UPPERCASE, start: 0x1D6A8 },
                 { chars: GREEK_LOWERCASE, start: 0x1D6C2 }
-            ]
+            ],
+            overrides: {
+                Σ: '𝚺',
+                Τ: '𝚻',
+                Υ: '𝚼',
+                Φ: '𝚽',
+                Χ: '𝚾',
+                Ψ: '𝚿',
+                Ω: '𝛀',
+                ϵ: '𝛜',
+                ϑ: '𝛝',
+                ϰ: '𝛞',
+                ϕ: '𝛟',
+                ϱ: '𝛠',
+                ϖ: '𝛡',
+                𝛤: '𝚪',
+                𝛥: '𝚫',
+                𝛩: '𝚯',
+                𝛬: '𝚲',
+                𝛯: '𝚵',
+                𝛱: '𝚷',
+                𝛴: '𝚺',
+                𝛶: '𝚼',
+                𝛷: '𝚽',
+                𝛹: '𝚿',
+                𝛺: '𝛀'
+            }
         },
         boldItalic: {
             ranges: [
@@ -113,7 +157,33 @@
             sequences: [
                 { chars: GREEK_UPPERCASE, start: 0x1D71C },
                 { chars: GREEK_LOWERCASE, start: 0x1D736 }
-            ]
+            ],
+            overrides: {
+                Σ: '𝜮',
+                Τ: '𝜯',
+                Υ: '𝜰',
+                Φ: '𝜱',
+                Χ: '𝜲',
+                Ψ: '𝜳',
+                Ω: '𝜴',
+                ϵ: '𝝐',
+                ϑ: '𝝑',
+                ϰ: '𝝒',
+                ϕ: '𝝓',
+                ϱ: '𝝔',
+                ϖ: '𝝕',
+                𝛤: '𝜞',
+                𝛥: '𝜟',
+                𝛩: '𝜣',
+                𝛬: '𝜦',
+                𝛯: '𝜩',
+                𝛱: '𝜫',
+                𝛴: '𝜮',
+                𝛶: '𝜰',
+                𝛷: '𝜱',
+                𝛹: '𝜳',
+                𝛺: '𝜴'
+            }
         },
         blackboard: {
             ranges: [
@@ -215,18 +285,21 @@
         '\\le', '\\leq', '\\ge', '\\geq', '\\in', '\\subseteq'
     ]);
 
-    const GREEK_LETTER_COMMANDS = new Set([
-        '\\alpha', '\\beta', '\\gamma', '\\delta',
-        '\\epsilon', '\\varepsilon', '\\zeta', '\\eta',
-        '\\theta', '\\vartheta', '\\iota', '\\kappa',
-        '\\lambda', '\\mu', '\\nu', '\\xi',
-        '\\pi', '\\varpi', '\\rho', '\\varrho',
-        '\\sigma', '\\varsigma', '\\tau', '\\upsilon',
-        '\\phi', '\\varphi', '\\chi', '\\psi',
-        '\\omega', '\\Gamma', '\\Delta', '\\Theta',
-        '\\Lambda', '\\Xi', '\\Pi', '\\Sigma',
-        '\\Upsilon', '\\Phi', '\\Psi', '\\Omega'
-    ]);
+    const DEFAULT_MATH_ITALIC_COMMAND_SYMBOLS = {
+        '\\alpha': '𝛼', '\\beta': '𝛽', '\\gamma': '𝛾', '\\delta': '𝛿',
+        '\\epsilon': '𝜖', '\\varepsilon': '𝜀', '\\zeta': '𝜁', '\\eta': '𝜂',
+        '\\theta': '𝜃', '\\vartheta': '𝜗', '\\iota': '𝜄', '\\kappa': '𝜅',
+        '\\varkappa': '𝜘',
+        '\\lambda': '𝜆', '\\mu': '𝜇', '\\nu': '𝜈', '\\xi': '𝜉',
+        '\\pi': '𝜋', '\\varpi': '𝜛', '\\rho': '𝜌', '\\varrho': '𝜚',
+        '\\sigma': '𝜎', '\\varsigma': '𝜍', '\\tau': '𝜏', '\\upsilon': '𝜐',
+        '\\phi': '𝜙', '\\varphi': '𝜑', '\\chi': '𝜒', '\\psi': '𝜓',
+        '\\omega': '𝜔',
+        '\\varGamma': '𝛤', '\\varDelta': '𝛥', '\\varTheta': '𝛩',
+        '\\varLambda': '𝛬', '\\varXi': '𝛯', '\\varPi': '𝛱',
+        '\\varSigma': '𝛴', '\\varUpsilon': '𝛶', '\\varPhi': '𝛷',
+        '\\varPsi': '𝛹', '\\varOmega': '𝛺'
+    };
 
     const TIGHT_RIGHT_SYMBOLS = ['∂', '∇', 'Δ'];
     const TIGHT_INFIX_SYMBOLS = ['·', '⋅'];
@@ -580,13 +653,11 @@
                 this.warn('Missing script argument');
                 return '';
             }
-            return this.withDefaultMathAlphabet('plain', () => {
-                if (this.current().type === 'LBRACE') {
-                    this.consume();
-                    return this.parseGroupContent();
-                }
-                return this.parseAtom();
-            });
+            if (this.current().type === 'LBRACE') {
+                this.consume();
+                return this.parseGroupContent();
+            }
+            return this.parseAtom();
         }
 
         readFunctionArgument() {
@@ -635,10 +706,13 @@
 
         convertDefaultCommandSymbol(command) {
             const symbol = COMMAND_SYMBOLS[command];
-            if (this.defaultMathAlphabet !== 'italic' || !GREEK_LETTER_COMMANDS.has(command)) {
-                return symbol;
+            if (
+                this.defaultMathAlphabet === 'italic'
+                && Object.prototype.hasOwnProperty.call(DEFAULT_MATH_ITALIC_COMMAND_SYMBOLS, command)
+            ) {
+                return DEFAULT_MATH_ITALIC_COMMAND_SYMBOLS[command];
             }
-            return convertMathAlphanumeric(symbol, MATH_ALPHANUMERIC_STYLE_DEFINITIONS.italic);
+            return symbol;
         }
 
         withDefaultMathAlphabet(defaultMathAlphabet, callback) {
