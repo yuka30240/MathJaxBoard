@@ -278,7 +278,8 @@
         '+': '₊', '-': '₋', '=': '₌', '(': '₍', ')': '₎',
         a: 'ₐ', e: 'ₑ', h: 'ₕ', i: 'ᵢ', j: 'ⱼ', k: 'ₖ',
         l: 'ₗ', m: 'ₘ', n: 'ₙ', o: 'ₒ', p: 'ₚ', r: 'ᵣ',
-        s: 'ₛ', t: 'ₜ', u: 'ᵤ', v: 'ᵥ', x: 'ₓ'
+        s: 'ₛ', t: 'ₜ', u: 'ᵤ', v: 'ᵥ', x: 'ₓ',
+        ə: 'ₔ', β: 'ᵦ', γ: 'ᵧ', ρ: 'ᵨ', φ: 'ᵩ', χ: 'ᵪ'
     };
 
     const STOP_ARGUMENT_COMMANDS = new Set([
@@ -552,7 +553,7 @@
 
         parseFunction(name) {
             const scripts = this.consumeScripts();
-            const decoratedName = formatScripts(name, scripts.sup, scripts.sub);
+            const decoratedName = formatScripts(name, scripts);
             const arg = this.readFunctionArgument();
             if (!arg) {
                 return decoratedName;
@@ -627,37 +628,47 @@
 
         applyTrailingScripts(base) {
             const scripts = this.consumeScripts();
-            if (!scripts.sup && !scripts.sub) {
+            if (!scripts.items.length) {
                 return base;
             }
-            return formatScripts(base, scripts.sup, scripts.sub);
+            return formatScripts(base, scripts);
         }
 
         consumeScripts() {
+            const items = [];
             let sup = null;
             let sub = null;
             while (this.current().type === 'SUP' || this.current().type === 'SUB') {
                 const type = this.consume().type;
-                const value = this.parseScriptArg();
+                const marker = type === 'SUP' ? '^' : '_';
+                const value = this.parseScriptArg({ forcePlain: true });
+                items.push({ marker, value });
                 if (type === 'SUP') {
                     sup = value;
                 } else {
                     sub = value;
                 }
             }
-            return { sup, sub };
+            return { sup, sub, items };
         }
 
-        parseScriptArg() {
-            if (this.current().type === 'EOF') {
-                this.warn('Missing script argument');
-                return '';
+        parseScriptArg(options = {}) {
+            const parse = () => {
+                if (this.current().type === 'EOF') {
+                    this.warn('Missing script argument');
+                    return '';
+                }
+                if (this.current().type === 'LBRACE') {
+                    this.consume();
+                    return this.parseGroupContent();
+                }
+                return this.parseAtom();
+            };
+
+            if (options.forcePlain) {
+                return this.withDefaultMathAlphabet('plain', parse);
             }
-            if (this.current().type === 'LBRACE') {
-                this.consume();
-                return this.parseGroupContent();
-            }
-            return this.parseAtom();
+            return parse();
         }
 
         readFunctionArgument() {
@@ -804,63 +815,56 @@
         return `(${arg})`;
     }
 
-    function formatScripts(base, sup, sub) {
-        if (isLargeOperator(base) && (sup || sub)) {
+    function formatScripts(base, scripts) {
+        const { sup, sub, items } = scripts;
+
+        if (isCompactRangeOperator(base) && sup && sub) {
+            const compactSup = toUnicodeScript(sup, '^');
+            const compactSub = toUnicodeScript(sub, '_');
+            if (compactSup && compactSub && getCharacterLength(compactSup) <= 3 && getCharacterLength(compactSub) <= 3) {
+                return base + items.map((item) => formatScriptValue(item.value, item.marker)).join('');
+            }
+
             const rangeSup = sup ? sup.replace(/\s+/g, '') : sup;
             const rangeSub = sub ? sub.replace(/\s+/g, '') : sub;
-            if (sup && sub) {
-                return `${base}_{${rangeSub}..${rangeSup}}`;
-            }
-            if (sup) {
-                return `${base}^{${rangeSup}}`;
-            }
-            return `${base}_{${rangeSub}}`;
+            return `${base}{${rangeSub}..${rangeSup}} `;
         }
 
-        let output = base;
-        if (sub) {
-            output += formatSubscript(sub);
-        }
-        if (sup) {
-            output += formatSuperscript(sup);
-        }
-        return output;
+        return base + items.map((item) => formatScriptValue(item.value, item.marker)).join('');
     }
 
-    function isLargeOperator(base) {
-        return base === 'Σ' || base === 'Π' || base === '∫' || base === 'lim';
+    function isCompactRangeOperator(base) {
+        return base === 'Σ' || base === 'Π' || base === '∐' || base === '∫';
     }
 
     function formatSuperscript(value) {
-        return formatScriptValue(value, SUPERSCRIPT, '^');
+        return formatScriptValue(value, '^');
     }
 
     function formatSubscript(value) {
-        return formatScriptValue(value, SUBSCRIPT, '_');
+        return formatScriptValue(value, '_');
     }
 
-    function formatScriptValue(value, table, marker) {
-        if (!value) return `${marker}()`;
-        if (canUseUnicodeScript(value, table, marker)) {
-            return Array.from(value).map((char) => table[char]).join('');
-        }
-        return `${marker}(${value})`;
+    function formatScriptValue(value, marker) {
+        if (!value) return `${marker}{}`;
+        return toUnicodeScript(value, marker) || `${marker}{${removeScriptWhitespace(value)}}`;
     }
 
-    function canUseUnicodeScript(value, table, marker) {
-        if (!Array.from(value).every((char) => Object.prototype.hasOwnProperty.call(table, char))) {
-            return false;
+    function toUnicodeScript(value, marker) {
+        const table = marker === '^' ? SUPERSCRIPT : SUBSCRIPT;
+        const chars = Array.from(value);
+        if (!chars.every((char) => Object.prototype.hasOwnProperty.call(table, char))) {
+            return '';
         }
-        if (marker === '_' && /[A-Za-z].*[A-Za-z]/.test(value)) {
-            return false;
-        }
-        if (marker === '^' && /[A-Za-z].*[A-Za-z]/.test(value)) {
-            return false;
-        }
-        if (/[A-Za-z]/.test(value) && /[+\-=()]/.test(value)) {
-            return false;
-        }
-        return true;
+        return chars.map((char) => table[char]).join('');
+    }
+
+    function getCharacterLength(value) {
+        return Array.from(value).length;
+    }
+
+    function removeScriptWhitespace(value) {
+        return value.replace(/\s+/g, '');
     }
 
     function convertMathAlphanumeric(value, style) {
@@ -902,7 +906,7 @@
         if (/^∂[A-Za-zΑ-Ωα-ω]/.test(value)) {
             return false;
         }
-        return /^[A-Za-z0-9α-ωΑ-Ωℕℤℚℝℂ𝔽ℏℓℵ∞∂∇\u{1D400}-\u{1D7FF}]+[\u00B2\u00B3\u00B9\u2070-\u207F\u2080-\u209C\u1D62-\u1D65\u2C7C]*$/u.test(value);
+        return /^[A-Za-z0-9α-ωΑ-Ωℕℤℚℝℂ𝔽ℏℓℵ∞∂∇\u{1D400}-\u{1D7FF}]+[\u00B2\u00B3\u00B9\u2070-\u207F\u2080-\u209C\u1D62-\u1D6A\u2C7C]*$/u.test(value);
     }
 
     function normalizeOutputSpacing(value) {
